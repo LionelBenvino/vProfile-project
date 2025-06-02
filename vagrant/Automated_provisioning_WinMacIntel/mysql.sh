@@ -10,7 +10,13 @@ sudo yum install mariadb-server -y
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
 cd /tmp/
-git clone -b main https://github.com/hkhcoder/vprofile-project.git
+if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+  echo "Usando SSH para clonar el repositorio..."
+  git clone -b main git@github.com:LionelBenvino/vProfile-project.git
+else
+  echo "Usando HTTPS para clonar el repositorio..."
+  git clone -b main https://github.com/LionelBenvino/vProfile-project.git
+fi
 #restore the dump file for the application
 sudo mysqladmin -u root password "$DATABASE_PASS"
 sudo mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')"

@@ -52,7 +52,14 @@ unzip apache-maven-3.9.9-bin.zip
 cp -r apache-maven-3.9.9 /usr/local/maven3.9
 export MAVEN_OPTS="-Xmx512m"
 
-git clone -b local https://github.com/hkhcoder/vprofile-project.git
+if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+  echo "Usando SSH para clonar el repositorio..."
+  git clone -b local git@github.com:LionelBenvino/vProfile-project.git
+else
+  echo "Usando HTTPS para clonar el repositorio..."
+  git clone -b local https://github.com/LionelBenvino/vProfile-project.git
+fi
+
 cd vprofile-project
 /usr/local/maven3.9/bin/mvn install
 systemctl stop tomcat
