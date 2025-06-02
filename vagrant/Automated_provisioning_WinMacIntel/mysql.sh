@@ -11,13 +11,7 @@ sudo systemctl start mariadb
 sudo systemctl enable mariadb
 cd /tmp/
 
-if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
-  echo "Usando SSH para clonar el repositorio..."
-  git clone -b main git@github.com:LionelBenvino/vProfile-project.git
-else
-  echo "Usando HTTPS para clonar el repositorio..."
-  git clone -b main https://github.com/LionelBenvino/vProfile-project.git
-fi
+git clone -b main https://github.com/LionelBenvino/vProfile-project.git
 
 #restore the dump file for the application
 sudo mysqladmin -u root password "$DATABASE_PASS"
